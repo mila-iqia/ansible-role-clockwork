@@ -1,0 +1,27 @@
+---
+- name: Install git
+  ansible.builtin.apt:
+    pkg:
+      - git
+
+- name: Copy clockwork deploy key
+  ansible.builtin.copy:
+    content: '{{ clockwork_git_deploy_key }}'
+    dest: /root/clockwork_deploy
+    mode: 0600
+
+- name: Copy clockwork code from git
+  ansible.builtin.git:
+    repo: '{{ clockwork_repo }}'
+    dest: /clockwork/
+    version: '{{ clockwork_checkout_commit }}'
+    key_file: /root/clockwork_deploy
+    accept_newhostkey: yes
+  environment:
+    # avoid hanging on private repo
+    GIT_TERMINAL_PROMPT: 0
+
+- name: delete deploy key
+  ansible.builtin.file:
+    path: /root/clockwork_deploy
+    state: absent

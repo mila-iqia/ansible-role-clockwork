@@ -1,0 +1,19 @@
+
+server {
+{% if clockwork_ssl_cert_file is defined %}
+   listen 443 ssl;
+
+  ssl_certificate /etc/ssl/clockwork.crt;
+  ssl_certificate_key /etc/ssl/clockwork.key;
+{% else %}
+  listen 80;
+{% endif %}
+
+  server_name {{ clockwork_server_name }};
+  access_log logs/{{ clockwork_server_name }}.log;
+
+  location / {
+    include uwsgi_params;
+    uwsgi_pass unix:/home/clockwork/uwsgi.sock;
+  }
+}

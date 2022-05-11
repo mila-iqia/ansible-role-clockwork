@@ -1,0 +1,11 @@
+[uwsgi]
+module = clockwork_web.main:app
+
+master = true
+processes = 5
+
+socket = /home/clockwork/uwsgi.sock
+chmod-socket = 660
+vaccum = true
+
+die-on-term = true

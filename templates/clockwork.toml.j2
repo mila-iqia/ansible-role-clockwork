@@ -1,0 +1,28 @@
+[flask]
+testing=false
+login_disabled=false
+secret_key="{{ clockwork_secret_key }}"
+
+[google]
+client_id="{{ clockwork_google_client_id }}"
+client_secret="{{ clockwork_google_client_secret }}"
+
+[mongo]
+connection_string="{{ clockwork_mongodb_connection_string }}"
+
+{% for cluster in clockwork_clusters %}
+
+[clusters.{{ cluster.name }}]
+account_field="{{ cluster.account_field }}"
+{% if cluster.update_field %}
+update_field="{{ cluster.update_field }}"
+{% else %}
+update_field=false
+{% endif %}
+{% if cluster.allocations == "*" %}
+allocations="*"
+{% else %}
+allocations={{ cluster.allocations }}
+{% endif %}
+timezone="{{ cluster.timezone }}"
+{% endfor %}

@@ -1,0 +1,36 @@
+---
+- name: Create mongodb group
+  ansible.builtin.group:
+    name: mongodb
+
+- name: Create mongodb user
+  ansible.builtin.user:
+    name: mongodb
+    group: mongodb
+
+- name: Install gpg
+  ansible.builtin.apt:
+    pkg:
+      - gpg
+      - gpg-agent
+
+- name: Add mongo apt key
+  ansible.builtin.apt_key:
+    url: https://www.mongodb.org/static/pgp/server-5.0.asc
+
+- name: Add mongo apt repo
+  ansible.builtin.apt_repository:
+    repo: deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse
+    state: present
+
+- name: Install mongodb
+  ansible.builtin.apt:
+    pkg:
+      - mongodb-org={{ clockwork_mongodb_version }}
+      - mongodb-org-server={{ clockwork_mongodb_version }}
+
+- name: Enable mongod
+  ansible.builtin.service:
+    name: mongod
+    enabled: yes
+    state: started

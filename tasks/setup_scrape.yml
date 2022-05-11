@@ -1,0 +1,82 @@
+---
+- name: Install system packages
+  ansible.builtin.apt:
+    pkg:
+      - python3.9
+      - python3.9-dev
+      - python3-pip
+      - rsync
+
+- name: Checkout source code
+  ansible.builtin.include_role:
+    name: mila.clockwork
+    tasks_from: checkout_src
+
+- name: Install slurm_state requirements with pip
+  ansible.builtin.pip:
+    requirements: /clockwork/slurm_state/requirements.txt
+
+- name: Create clockwork user
+  ansible.builtin.include_role:
+    name: mila.clockwork
+    tasks_from: create_user
+
+- name: Setup cluster update scripts
+  ansible.builtin.template:
+    src: templates/clockwork-scrape.service.j2
+    dest: /lib/systemd/system/clockwork-scrape-{{ item.name }}.service
+    mode: 0600
+  when: item.fetch_remote
+  loop: '{{ clockwork_clusters }}'
+
+- name: Setup systemd timer triggers
+  ansible.builtin.template:
+    src: templates/clockwork-scrape.timer.j2
+    dest: /lib/systemd/system/clockwork-scrape-{{ item.name }}.timer
+    mode: 0600
+  when: item.fetch_remote
+  loop: '{{ clockwork_clusters }}'
+
+- name: Find old timers
+  ansible.builtin.find:
+    paths: /lib/systemd/system
+    patterns: clockwork-scrape-*.{timer,service}
+  register: current_timers
+
+- name: Find old timers
+  ansible.builtin.set_fact:
+   found_timers: "{{ current_timers.files | map(attribute='path') | map('regex_replace', '/lib/systemd/system/clockwork-scrape-(.+).{timer,service}', '\\1') | unique }}"
+   needed_timers: "{{ clockwork_clusters | map(attribute='name') }}"
+
+- name: Set old timers list
+  ansible.builtin.set_fact:
+    old_timers: "{{ found_timers | difference(needed_timers) }}"
+
+- name: Disable old timers
+  ansible.builtin.systemd:
+    enabled: no
+    name: cloclwork-scrape-{{ item }}.timer
+  loop: '{{ old_timers }}'
+
+- name: Delete old systemd timers
+  ansible.builtin.file:
+    state: absent
+    path: "/lib/systemd/system/clockwork-scrape-{{ item }}.timer"
+  loop: '{{ old_timers }}'
+
+- name: Delete old systemd services
+  ansible.builtin.file:
+    state: absent
+    path: "/lib/systemd/system/clockwork-scrape-{{ item }}.service"
+  loop: '{{ old_timers }}'
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon-reload: yes
+
+- name: Enable systemd timers
+  ansible.builtin.systemd:
+    enabled: true
+    name: clockwork-scrape-{{ item.name }}.timer
+  when: item.fetch_remote
+  loop: '{{ clockwork_clusters }}'

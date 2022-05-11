@@ -1,0 +1,11 @@
+[Unit]
+Description=Update statistics for {{ item.name }}.
+Requires=clockwork-scrape-{{ item.name }}.service
+
+[Timer]
+Unit=clockwork-scrape-{{ item.name }}.service
+OnCalendar=*-*-* *:00/{{ item.remote_interval }}:00
+AccuracySec=2min
+
+[Intstall]
+WantedBy=timers.target

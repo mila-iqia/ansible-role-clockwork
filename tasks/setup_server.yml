@@ -1,0 +1,94 @@
+---
+- name: Install system packages for clockwork machine
+  ansible.builtin.apt:
+    pkg:
+      - python3.9
+      - python3.9-dev
+      - python3-pip
+      - build-essential
+      - nginx
+
+- name: Create clockwork user
+  ansible.builtin.include_role:
+    name: mila.clockwork
+    tasks_from: create_user
+    
+- name: Checkout source code
+  ansible.builtin.include_role:
+    name: mila.clockwork
+    tasks_from: checkout_src
+
+- name: Install clockwork_web requirements with pip
+  ansible.builtin.pip:
+    requirements: /clockwork/clockwork_web/requirements.txt
+
+- name: Install uWSGI
+  ansible.builtin.pip:
+    name: uwsgi==2.0.*
+
+- name: Configure uWSGI
+  ansible.builtin.template:
+    src: templates/uwsgi.ini.j2
+    dest: /clockwork/uwsgi.ini
+    mode: 0600
+    owner: clockwork
+
+- name: Configure Clockwork
+  ansible.builtin.template:
+    src: templates/clockwork.toml.j2
+    dest: /clockwork/clockwork.toml
+    mode: 0600
+    owner: clockwork
+
+- name: Register clockwork service
+  ansible.builtin.template:
+    src: templates/clockwork.service.j2
+    dest: /lib/systemd/system/clockwork.service
+    mode: 0600
+
+- name: Create nginx logs dir
+  ansible.builtin.file:
+    path: /usr/share/nginx/logs
+    state: directory
+    mode: 0750
+    owner: www-data
+    group: www-data
+
+- name: Install ssl certificate file
+  ansible.builtin.copy:
+    content: "{{ clockwork_ssl_cert_file }}"
+    dest: /etc/ssl/clockwork.crt
+    mode: 0600
+  when: clockwork_ssl_cert_file is defined
+
+- name: Install ssl certificate key
+  ansible.builtin.copy:
+    content: "{{ clockwork_ssl_cert_key }}"
+    dest: /etc/ssl/clockwork.key
+    mode: 0600
+  when: clockwork_ssl_cert_file is defined
+
+- name: Configure nginx
+  ansible.builtin.template:
+    src: templates/nginx.cfg.j2
+    dest: /etc/nginx/sites-available/clockwork.cfg
+    mode: 0600
+
+- name: Enable clockwork site
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/clockwork.cfg
+    dest: /etc/nginx/sites-enabled/default
+    state: link
+
+- name: Start clockwork
+  ansible.builtin.systemd:
+    daemon-reload: yes
+    name: clockwork
+    state: started
+    enabled: yes
+
+- name: Enable nginx
+  ansible.builtin.service:
+    name: nginx
+    enabled: yes
+    state: restarted

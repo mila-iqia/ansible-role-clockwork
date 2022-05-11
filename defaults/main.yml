@@ -1,0 +1,101 @@
+---
+# defaults file for clockwork
+
+# -------------------------------------------------------------
+### These variables contain secrets and should be encrypted ###
+
+# ssh private key for authentication to github (string)
+#clockwork_git_deploy_key: 
+
+
+# SSH private key for clockwork user, used to connect to remote clusters (string)
+clockwork_ssh_private_key:
+
+
+# SSL cert for nginx (path, should that be a string?)
+#clockwork_ssl_cert_file: /nonexistant
+#clockwork_ssl_cert_key: /nonexistant
+
+
+# Clockwork flask secret key (used to encode cookies)
+#clockwork_secret_key:
+
+
+# Google client secret (for OAuth)
+# clockwork_google_client_secret:
+
+
+# MongoDB connection string (should be encrypted if using user/password,
+# can be public otherwise)
+clockwork_mongodb_connection_string: "mongodb://localhost:27017/readPreference=primary&retryWrites=true&w=majority&tlsAllowInvalidCertificates=true&ssl=false"
+
+# -----------------------------------------
+### End of variables containing secrets ###
+
+
+# This has to be in the 5.0.x series for now
+clockwork_mongodb_version: "5.0.7"
+
+
+# Where to fetch the clockwork code
+clockwork_repo: 'git@github.com:mila-iqia/clockwork.git'
+clockwork_checkout_commit: "master"
+
+
+
+# The fqdn server name for the web endpoint
+clockwork_server_name: "localhost"
+
+
+# The user that clockwork server processes will run under (needs to exist)
+clockwork_user: clockwork
+
+# Group for clockwork user.  Must exist before.
+# This group must be shared with the web server user
+clockwork_group: www-data
+
+# Home for clockwork_user
+clockwork_user_home: /home/clockwork
+
+
+# Google client ID (for OAuth)
+# clockwork_google_client_id:
+
+
+# Description of the clockwork clusters. This is a list with an entry
+# for each managed cluster.
+clockwork_clusters:
+    # The name of the cluster, can be anything convenient
+  - name:
+
+    # The name of the field in MongoDB, will be created
+    # This be the same as other cluster to indicate that the account
+    # name is shared
+    # Make sure not to clash with the builtin names or it will create problems
+    account_field:
+
+    # A field to store the account update key, will be created if not false
+    # This should only be shared between clusters if they also have
+    # shared account_fields # This can be set to false to prevent
+    # account self-registration for this cluster.
+    # Make sure not to clash with the builtin names or it will create problems
+    update_field:
+
+    # The allocations under monitoring.  Either a list of names or "*"
+    # for all allocations on the cluster
+    allocations:
+
+    # The timezone for the cluster (in the America/Montreal format)
+    timezone:
+
+    # Whether to fetch remote stats for this cluster (true/false)
+    fetch_remote:
+
+    # User to use for remote ssh connection
+    remote_user:
+    # Hostname to connect to
+    remote_hostname:
+    # Path to copy
+    remote_path:
+    # Interval between fetches (in minutes, for the */{interval} format)
+    remote_interval:

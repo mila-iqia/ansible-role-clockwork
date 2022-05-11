@@ -1,0 +1,22 @@
+---
+- name: Create clockwork user
+  ansible.builtin.user:
+    name: '{{ clockwork_user }}'
+    group: '{{ clockwork_group }}'
+    home: '{{ clockwork_user_home }}'
+
+- name: Create ssh dir
+  ansible.builtin.file:
+    path: "{{ clockwork_user_home }}/.ssh"
+    state: directory
+    owner: "{{ clockwork_user }}"
+    group: "{{ clockwork_group }}"
+    mode: 0700
+
+- name: Add ssh key
+  ansible.builtin.copy:
+    content: '{{ clockwork_ssh_private_key }}'
+    dest: "{{ clockwork_user_home }}/.ssh/id_clockwork"
+    owner: "{{ clockwork_user }}"
+    group: "{{ clockwork_group }}"
+    mode: 0600

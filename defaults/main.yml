@@ -12,9 +12,9 @@
 clockwork_ssh_private_key:
 
 
-# SSL cert for nginx (path, should that be a string?)
-#clockwork_ssl_cert_file: /nonexistant
-#clockwork_ssl_cert_key: /nonexistant
+# SSL cert for nginx (string)
+#clockwork_ssl_cert_file:
+#clockwork_ssl_cert_key:
 
 
 # Clockwork flask secret key (used to encode cookies)

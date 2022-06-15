@@ -26,26 +26,33 @@
   ansible.builtin.pip:
     name: uwsgi==2.0.*
 
-- name: Configure uWSGI
-  ansible.builtin.template:
-    src: templates/uwsgi.ini.j2
-    dest: "{{ clockwork_install_path }}/uwsgi.ini"
-    mode: 0600
-    owner: clockwork
-
 - name: Ensure socket directory is present
   ansible.builtin.file:
     path: "{{ clockwork_socket_path | dirname }}"
     state: directory
     mode: 0700
-    owner: clockwork
+    owner: {{ clockwork_user }}
+
+- name: Ensure config dir is present
+  ansible.builtin.file:
+    path: /etc/clockwork
+    mode: 0700
+    state: directory
+    owner: {{ clockwork_user }}
+
+- name: Configure uWSGI
+  ansible.builtin.template:
+    src: templates/uwsgi.ini.j2
+    dest: /etc/clockwork/uwsgi.ini
+    mode: 0600
+    owner: {{ clockwork_user }}
 
 - name: Configure Clockwork
   ansible.builtin.template:
     src: templates/clockwork.toml.j2
-    dest: "{{ clockwork_install_path }}/clockwork.toml"
+    dest: /etc/clockwork/clockwork.toml
     mode: 0600
-    owner: clockwork
+    owner: {{ clockwork_user }}
 
 - name: Register clockwork service
   ansible.builtin.template:

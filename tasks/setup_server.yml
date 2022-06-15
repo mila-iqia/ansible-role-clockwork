@@ -33,6 +33,13 @@
     mode: 0600
     owner: clockwork
 
+- name: Ensure socket directory is present
+  ansible.builtin.file:
+    path: "{{ clockwork_socket_path | dirname }}"
+    state: directory
+    mode: 0700
+    owner: clockwork
+
 - name: Configure Clockwork
   ansible.builtin.template:
     src: templates/clockwork.toml.j2
@@ -43,7 +50,7 @@
 - name: Register clockwork service
   ansible.builtin.template:
     src: templates/clockwork.service.j2
-    dest: /lib/systemd/system/clockwork.service
+    dest: /etc/systemd/system/clockwork.service
     mode: 0600
 
 - name: Create nginx logs dir

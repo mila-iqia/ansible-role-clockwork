@@ -24,7 +24,7 @@
 - name: Setup cluster update scripts
   ansible.builtin.template:
     src: templates/clockwork-scrape.service.j2
-    dest: /lib/systemd/system/clockwork-scrape-{{ item.name }}.service
+    dest: /etc/systemd/system/clockwork-scrape-{{ item.name }}.service
     mode: 0600
   when: item.fetch_remote
   loop: '{{ clockwork_clusters }}'
@@ -32,20 +32,20 @@
 - name: Setup systemd timer triggers
   ansible.builtin.template:
     src: templates/clockwork-scrape.timer.j2
-    dest: /lib/systemd/system/clockwork-scrape-{{ item.name }}.timer
+    dest: /etc/systemd/system/clockwork-scrape-{{ item.name }}.timer
     mode: 0600
   when: item.fetch_remote
   loop: '{{ clockwork_clusters }}'
 
 - name: Find old timers
   ansible.builtin.find:
-    paths: /lib/systemd/system
+    paths: /etc/systemd/system
     patterns: clockwork-scrape-*.{timer,service}
   register: current_timers
 
 - name: Find old timers
   ansible.builtin.set_fact:
-   found_timers: "{{ current_timers.files | map(attribute='path') | map('regex_replace', '/lib/systemd/system/clockwork-scrape-(.+).{timer,service}', '\\1') | unique }}"
+   found_timers: "{{ current_timers.files | map(attribute='path') | map('regex_replace', '/etc/systemd/system/clockwork-scrape-(.+).{timer,service}', '\\1') | unique }}"
    needed_timers: "{{ clockwork_clusters | map(attribute='name') }}"
 
 - name: Set old timers list
@@ -61,13 +61,13 @@
 - name: Delete old systemd timers
   ansible.builtin.file:
     state: absent
-    path: "/lib/systemd/system/clockwork-scrape-{{ item }}.timer"
+    path: "/etc/systemd/system/clockwork-scrape-{{ item }}.timer"
   loop: '{{ old_timers }}'
 
 - name: Delete old systemd services
   ansible.builtin.file:
     state: absent
-    path: "/lib/systemd/system/clockwork-scrape-{{ item }}.service"
+    path: "/etc/systemd/system/clockwork-scrape-{{ item }}.service"
   loop: '{{ old_timers }}'
 
 - name: Reload systemd
@@ -77,6 +77,7 @@
 - name: Enable systemd timers
   ansible.builtin.systemd:
     enabled: true
+    state: started
     name: clockwork-scrape-{{ item.name }}.timer
   when: item.fetch_remote
   loop: '{{ clockwork_clusters }}'

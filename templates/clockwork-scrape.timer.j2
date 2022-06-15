@@ -7,5 +7,5 @@ Unit=clockwork-scrape-{{ item.name }}.service
 OnCalendar=*-*-* *:00/{{ item.remote_interval }}:00
 AccuracySec=2min
 
-[Intstall]
+[Install]
 WantedBy=timers.target

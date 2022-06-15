@@ -20,7 +20,7 @@
 
 - name: Install clockwork_web requirements with pip
   ansible.builtin.pip:
-    requirements: /clockwork/clockwork_web/requirements.txt
+    requirements: "{{ clockwork_install_path }}/clockwork_web/requirements.txt"
 
 - name: Install uWSGI
   ansible.builtin.pip:
@@ -29,14 +29,14 @@
 - name: Configure uWSGI
   ansible.builtin.template:
     src: templates/uwsgi.ini.j2
-    dest: /clockwork/uwsgi.ini
+    dest: "{{ clockwork_install_path }}/uwsgi.ini"
     mode: 0600
     owner: clockwork
 
 - name: Configure Clockwork
   ansible.builtin.template:
     src: templates/clockwork.toml.j2
-    dest: /clockwork/clockwork.toml
+    dest: "{{ clockwork_install_path }}/clockwork.toml"
     mode: 0600
     owner: clockwork
 
@@ -77,7 +77,7 @@
 - name: Enable clockwork site
   ansible.builtin.file:
     src: /etc/nginx/sites-available/clockwork.cfg
-    dest: /etc/nginx/sites-enabled/default
+    dest: /etc/nginx/sites-enabled/clockwork
     state: link
 
 - name: Start clockwork

@@ -5,10 +5,10 @@ After=network.target
 [Service]
 User={{ clockwork_user }}
 Group={{ clockwork_group }}
-Environment=CLOCKWORK_CONFIG=/clockwork/clockwork.toml
+Environment=CLOCKWORK_CONFIG={{ clockwork_install_path }}/clockwork.toml
 
-WorkingDirectory=/clockwork
-ExecStart=uwsgi --ini /clockwork/uwsgi.ini
+WorkingDirectory={{ clockwork_install_path }}
+ExecStart=uwsgi --ini {{ clockwork_install_path }}/uwsgi.ini
 
 [Install]
 WantedBy=multi-user.target

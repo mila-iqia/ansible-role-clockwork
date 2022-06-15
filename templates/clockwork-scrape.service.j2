@@ -6,7 +6,7 @@ After=network.target
 Type=oneshot
 User={{ clockwork_user }}
 Group={{ clockwork_group }}
-Environment=CLOCKWORK_CONFIG=/clockwork/clockwork.toml
+Environment=CLOCKWORK_CONFIG={{ clockwork_install_path }}/clockwork.toml
 
 WorkingDirectory=/clockwork
 ExecStart=timeout 120 rsync -a {{ item.remote_user }}@{{ item.remote_hostname }}:{{ item.remote_path }}/* {{ clockwork_user_home }}/reports/{{ item.name }}

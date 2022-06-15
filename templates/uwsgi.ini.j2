@@ -4,7 +4,7 @@ module = clockwork_web.main:app
 master = true
 processes = 5
 
-socket = /home/clockwork/uwsgi.sock
+socket = {{ clockwork_socket_path }}
 chmod-socket = 660
 vaccum = true
 

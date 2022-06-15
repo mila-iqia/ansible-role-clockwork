@@ -14,7 +14,7 @@
 
 - name: Install slurm_state requirements with pip
   ansible.builtin.pip:
-    requirements: /clockwork/slurm_state/requirements.txt
+    requirements: "{{ clockwork_install_path }}/slurm_state/requirements.txt"
 
 - name: Create clockwork user
   ansible.builtin.include_role:

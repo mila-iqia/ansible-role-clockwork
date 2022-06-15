@@ -58,6 +58,14 @@ clockwork_group: www-data
 clockwork_user_home: /home/clockwork
 
 
+# Install path
+clockwork_install_path: /opt/clockwork
+
+
+# Unix socket path for uwsgi
+clockwork_socket_path: /var/lib/clockwork/uwsgi.sock
+
+
 # Google client ID (for OAuth)
 # clockwork_google_client_id:
 

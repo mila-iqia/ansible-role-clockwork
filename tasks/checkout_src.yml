@@ -13,7 +13,7 @@
 - name: Copy clockwork code from git
   ansible.builtin.git:
     repo: '{{ clockwork_repo }}'
-    dest: /clockwork/
+    dest: '{{ clockwork_install_path }}'
     version: '{{ clockwork_checkout_commit }}'
     key_file: /root/clockwork_deploy
     accept_newhostkey: yes

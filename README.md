@@ -22,6 +22,8 @@ something similar.
  - `clockwork_ssh_private_key`: [SECRET] SSH private key to connect to remote clusters
  - `clockwork_ssl_cert_file`: [SECRET] SSL certificate file for the website
  - `clockwork_ssl_cert_key`: [SECRET] SSL certificate key for the website
+ - `clockwork_ldap_certificate`: [SECRET] SSL certificate for the ldap server (only useful for user sync)
+ - `clockwork_ldap_private_key`: [SECRET] SSL private key for the ldap server (only useful for user sync)
  - `clockwork_secret_key`: [SECRET] Flask secret key used to secure session cookies
  - `clockwork_cluster`: A list of mappings that describe the monitored clusters.
     Here is an example with a description of the fields:
@@ -66,12 +68,13 @@ something similar.
     ```
   - `clockwork_mongodb_connection_string`: If using the included mongod role, the default is okay.  If using an extrenal mongodb server then it should be set to match.  [SECRET] if using username and password.
 
-There are other variables to change the local username and other minor details, refer to the defaults/main.yml file for more information.
+There are other variables to change the local username and other minor
+details, refer to the defaults/main.yml file for more information.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+This is a sample that uses all the defined tasks:
 
     - hosts: clockwork
       tasks:
@@ -87,7 +90,19 @@ Including an example of how to use your role (for instance, with variables passe
           include_role:
             name: mila.clockwork
             tasks_from: setup_scrape
+        - name: Setup user synchcronization with google ldap
+          include_role:
+            name: mila.clockwork
+            tasks_from: setup_user
 
+
+If you want to use a pre-existing instance of MongoDB, skip the
+setup_mongod step and set the correct connection string in
+`clockwork_mongodb_conncetion_string`.
+
+The setup_user step has many hardcoded choices for now which might not
+be useful everywhere, instead of running it as-is, you might want to
+adjust it.
 
 License
 -------

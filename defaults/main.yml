@@ -34,7 +34,7 @@ clockwork_mongodb_connection_string: "mongodb://localhost:27017/readPreference=p
 
 
 # This has to be in the 5.0.x series for now
-clockwork_mongodb_version: "5.0.7"
+clockwork_mongodb_version: "5.0.9"
 
 
 # Where to fetch the clockwork code

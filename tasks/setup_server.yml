@@ -30,8 +30,9 @@
   ansible.builtin.file:
     path: "{{ clockwork_socket_path | dirname }}"
     state: directory
-    mode: 0700
+    mode: 0750
     owner: "{{ clockwork_user }}"
+    group: www-data
 
 - name: Ensure config dir is present
   ansible.builtin.file:

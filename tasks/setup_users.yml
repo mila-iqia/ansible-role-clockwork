@@ -38,21 +38,21 @@
     path: /etc/clockwork
     mode: 0700
     state: directory
-    owner: {{ clockwork_user }}
+    owner: "{{ clockwork_user }}"
 
 - name: Install ldap private key
-  ansible.builtin.file:
+  ansible.builtin.copy:
     content: "{{ clockwork_ldap_private_key }}"
     dest: /etc/clockwork/clockwork_ldap.key
     mode: 0600
-    owner: {{ clockwork_user }}
+    owner: "{{ clockwork_user }}"
 
 - name: Install ldap certificate
-  ansible.builtin.file:
+  ansible.builtin.copy:
     content: "{{ clockwork_ldap_certificate }}"
     dest: /etc/clockwork/clockwork_ldap.crt
     mode: 0600
-    owner: {{ clockwork_user }}
+    owner: "{{ clockwork_user }}"
 
 - name: Enable systemd timers
   ansible.builtin.systemd:

@@ -93,7 +93,7 @@ This is a sample that uses all the defined tasks:
         - name: Setup user synchcronization with google ldap
           include_role:
             name: mila.clockwork
-            tasks_from: setup_user
+            tasks_from: setup_users
 
 
 If you want to use a pre-existing instance of MongoDB, skip the

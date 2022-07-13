@@ -25,7 +25,7 @@ something similar.
  - `clockwork_ldap_certificate`: [SECRET] SSL certificate for the ldap server (only useful for user sync)
  - `clockwork_ldap_private_key`: [SECRET] SSL private key for the ldap server (only useful for user sync)
  - `clockwork_secret_key`: [SECRET] Flask secret key used to secure session cookies
- - `clockwork_cluster`: A list of mappings that describe the monitored clusters.
+ - `clockwork_clusters`: A list of mappings that describe the monitored clusters.
     Here is an example with a description of the fields:
     ```
       # The name is a user-friendly name to identify this entry.  Should not contain spaces

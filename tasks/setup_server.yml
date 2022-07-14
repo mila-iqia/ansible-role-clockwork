@@ -99,7 +99,7 @@
   ansible.builtin.systemd:
     daemon-reload: yes
     name: clockwork
-    state: started
+    state: restarted
     enabled: yes
 
 - name: Enable nginx

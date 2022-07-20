@@ -7,5 +7,5 @@ Type=oneshot
 User={{ clockwork_user }}
 Group={{ clockwork_group }}
 
-WorkingDirectory=/clockwork
+WorkingDirectory={{ clockwork_install_path }}
 ExecStart=python3 {{ clockwork_install_path }}/scripts/read_mila_ldap.py --local_private_key_file /etc/ssl/private/clockwork_ldap.key --local_certificate_file /etc/ssl/private/clockwork_ldap.crt --ldap_service_uri ldaps://ldap.google.com --mongodb_connection_string {{ clockwork_mongodb_connection_string }}

@@ -9,6 +9,7 @@
     content: '{{ clockwork_git_deploy_key }}'
     dest: /root/clockwork_deploy
     mode: 0600
+  no_log: true
 
 - name: Copy clockwork code from git
   ansible.builtin.git:

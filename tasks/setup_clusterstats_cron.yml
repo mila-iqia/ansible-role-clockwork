@@ -3,6 +3,11 @@
     name: mila.clockwork
     tasks_from: checkout_src
 
+- name: Ensure the Cluster Stats Cache script is executable
+  ansible.builtin.file:
+    path: "{{ clockwork_install_path }}/slurm_state/cron_scripts/generate_clusterstats_cache.sh"
+    mode: '0755'
+
 - name: Configure path to Slurm commands in cron
   ansible.builtin.cron:
     name: PATH

@@ -10,6 +10,15 @@ client_secret="{{ clockwork_google_client_secret }}"
 [mongo]
 connection_string="{{ clockwork_mongodb_connection_string }}"
 
+[translation]
+translations_folder="static/locales"
+available_languages=["en", "fr"]
+
+[settings.default_values]
+nbr_items_per_page=25
+dark_mode=false
+language="en"
+
 {% for cluster in clockwork_clusters %}
 
 [clusters.{{ cluster.name }}]

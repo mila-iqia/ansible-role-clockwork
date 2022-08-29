@@ -21,6 +21,14 @@
     name: mila.clockwork
     tasks_from: create_user
 
+- name: Setup ssh config for clockwork
+  ansible.builtin.template:
+    src: templates/ssh_config.j2
+    dest: "{{ clockwork_user_home }}/.ssh/config"
+    mode: 0600
+    owner: "{{ clockwork_user }}"
+    group: "{{ clockwork_group }}"
+
 - name: Setup cluster update scripts
   ansible.builtin.template:
     src: templates/clockwork-scrape.service.j2

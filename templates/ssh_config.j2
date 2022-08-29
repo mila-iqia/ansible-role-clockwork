@@ -1,0 +1,4 @@
+{% for cluster in clockwork_clusters %}
+Host {{ cluster.remote_hostname }}
+  StrictHostKeyChecking accept-new
+{% endfor %}

@@ -29,6 +29,14 @@
     owner: "{{ clockwork_user }}"
     group: "{{ clockwork_group }}"
 
+- name: Create reports directory
+  ansible.builtin.file:
+    path: "{{ clockwork_user_home }}/reports/"
+    state: directory
+    mode: 0750
+    owner: "{{ clockwork_user }}"
+    group: "{{ clockwork_group }}"
+
 - name: Setup cluster update scripts
   ansible.builtin.template:
     src: templates/clockwork-scrape.service.j2

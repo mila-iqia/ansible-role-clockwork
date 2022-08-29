@@ -53,15 +53,15 @@
   when: item.fetch_remote
   loop: '{{ clockwork_clusters }}'
 
-- name: Find old timers
+- name: Find all timers
   ansible.builtin.find:
     paths: /etc/systemd/system
-    patterns: clockwork-scrape-*.{timer,service}
+    patterns: 'clockwork-scrape-*.timer'
   register: current_timers
 
 - name: Find old timers
   ansible.builtin.set_fact:
-   found_timers: "{{ current_timers.files | map(attribute='path') | map('regex_replace', '/etc/systemd/system/clockwork-scrape-(.+).{timer,service}', '\\1') | unique }}"
+   found_timers: "{{ current_timers.files | map(attribute='path') | map('regex_replace', '/etc/systemd/system/clockwork-scrape-(.+)\\.timer', '\\1') }}"
    needed_timers: "{{ clockwork_clusters | map(attribute='name') }}"
 
 - name: Set old timers list
@@ -71,7 +71,7 @@
 - name: Disable old timers
   ansible.builtin.systemd:
     enabled: no
-    name: cloclwork-scrape-{{ item }}.timer
+    name: clockwork-scrape-{{ item }}.timer
   loop: '{{ old_timers }}'
 
 - name: Delete old systemd timers

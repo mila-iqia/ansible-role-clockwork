@@ -1,4 +1,5 @@
 {% for cluster in clockwork_clusters %}
 Host {{ cluster.remote_hostname }}
   StrictHostKeyChecking accept-new
+  IdentityFile ~/.ssh/id_clockwork
 {% endfor %}

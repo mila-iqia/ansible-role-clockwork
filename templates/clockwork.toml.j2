@@ -34,24 +34,12 @@ allocations="*"
 allocations={{ cluster.allocations }}
 {% endif %}
 timezone="{{ cluster.timezone }}"
-{% endfor %}
-{% if cluster.remote_user %}
 remote_user="{{ cluster.remote_user }}"
-{% else %}
-remote_user=""
-{% endif %}
-{% if cluster.remote_hostname %}
 remote_hostname="{{ cluster.remote_hostname }}"
-{% else %}
-remote_hostname=""
-{% endif %}
-{% if cluster.remote_hostname %}
-remote_hostname="{{ cluster.remote_hostname }}"
-{% else %}
-remote_hostname=""
-{% endif %}
 {% if cluster.sacct_enabled %}
-sacct_enabled="{{ cluster.sacct_enabled }}"
+sacct_enabled={{ cluster.sacct_enabled }}
 {% else %}
 sacct_enabled=false
 {% endif %}
+sacct_path="{{ cluster.sacct_path }}"
+{% endfor %}

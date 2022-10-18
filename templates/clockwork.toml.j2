@@ -42,4 +42,6 @@ sacct_enabled={{ cluster.sacct_enabled }}
 sacct_enabled=false
 {% endif %}
 sacct_path="{{ cluster.sacct_path }}"
+sacct_ssh_key_filename="{{ cluster.sacct_ssh_key_filename }}"
+
 {% endfor %}

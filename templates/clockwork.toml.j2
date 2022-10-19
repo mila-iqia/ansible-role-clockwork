@@ -34,6 +34,12 @@ allocations="*"
 allocations={{ cluster.allocations }}
 {% endif %}
 timezone="{{ cluster.timezone }}"
+organization="{{ cluster.organization }}"
+nbr_cpus={{ cluster.nbr_cpus }}
+nbr_gpus={{ cluster.nbr_gpus }}
+official_documentation="{{ cluster.official_documentation }}"
+mila_documentation="{{ cluster.mila_documentation }}"
+display_order={{ cluster.display_order }}
 remote_user="{{ cluster.remote_user }}"
 remote_hostname="{{ cluster.remote_hostname }}"
 {% if cluster.sacct_enabled %}

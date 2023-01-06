@@ -42,7 +42,7 @@ mila_documentation="{{ cluster.mila_documentation }}"
 display_order={{ cluster.display_order }}
 remote_user="{{ cluster.remote_user }}"
 remote_hostname="{{ cluster.remote_hostname }}"
-sacct_enabled={{ cluster.sacct_enabled }}
+sacct_enabled={{ cluster.sacct_enabled | lower}}
 sacct_path="{{ cluster.sacct_path }}"
 sacct_ssh_key_filename="{{ cluster.sacct_ssh_key_filename }}"
 

@@ -3,6 +3,15 @@ testing=false
 login_disabled=false
 secret_key="{{ clockwork_secret_key }}"
 
+[sentry]
+dns="{{ clockwork_sentry_dns }}"
+traces_sample_rate={{ clockwork_sentry_traces_sample_rate }}
+
+[logging]
+level="{{ clockwork_logging_level }}"
+stderr=false
+journald=true
+
 [google]
 client_id="{{ clockwork_google_client_id }}"
 client_secret="{{ clockwork_google_client_secret }}"
@@ -15,9 +24,9 @@ translations_folder="static/locales"
 available_languages=["en", "fr"]
 
 [settings.default_values]
-nbr_items_per_page=25
-dark_mode=false
-language="en"
+nbr_items_per_page={{ clockwork_settings_items_per_page }}
+dark_mode={{ clockwork_settings_dark_mode }}
+language="{{ clockwork_settings_language }}"
 
 {% for cluster in clockwork_clusters %}
 
@@ -34,16 +43,23 @@ allocations="*"
 allocations={{ cluster.allocations }}
 {% endif %}
 timezone="{{ cluster.timezone }}"
+{% if cluster.organization is defined %}
 organization="{{ cluster.organization }}"
-nbr_cpus={{ cluster.nbr_cpus }}
-nbr_gpus={{ cluster.nbr_gpus }}
+{% endif %}
+nbr_cpus={{ cluster.nbr_cpus | default(0) }}
+nbr_gpus={{ cluster.nbr_gpus | default(0) }}
+{% if cluster.official_documentation is defined %}
 official_documentation="{{ cluster.official_documentation }}"
+{% endif %}
+{% if cluster.mila_documentation is defined %}
 mila_documentation="{{ cluster.mila_documentation }}"
-display_order={{ cluster.display_order }}
+{% endif %}
+display_order={{ cluster.display_order | default(9999) }}
+{% if cluster.sacct_enabled %}
 remote_user="{{ cluster.remote_user }}"
 remote_hostname="{{ cluster.remote_hostname }}"
-sacct_enabled={{ cluster.sacct_enabled | lower}}
+sacct_enabled=true
 sacct_path="{{ cluster.sacct_path }}"
-sacct_ssh_key_filename="{{ cluster.sacct_ssh_key_filename }}"
-
+sacct_ssh_key_filename="id_clockwork"
+{% endif %}
 {% endfor %}

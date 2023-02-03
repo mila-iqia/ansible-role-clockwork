@@ -99,6 +99,18 @@ clockwork_clusters:
     # The timezone for the cluster (in the America/Montreal format)
     timezone:
 
+    # The organization responsible for the cluster (string, optional)
+    organization:
+
+    # Some data about the cluster
+    nbr_cpus: # optional
+    nbr_gpus: # optional
+    official_documentation: # a url, optional
+    local_documentation: # a url, optional
+
+    # The ranking in the list of clusters (lower number is higher on the list)
+    display_order: # int, optional
+
     # Whether to fetch remote stats for this cluster (true/false)
     fetch_remote:
 
@@ -117,3 +129,15 @@ clockwork_clusterstats_cron_minute: '*/5'
 
 # Define the user who run the script. Optional, defaults to clockwork_user.
 #clockwork_clusterstats_cron_user:
+
+# Define info for sentry
+clockwork_sentry_dns: ""
+clockwork_sentry_traces_sample_rate: 1.0
+
+# Logging level for verbosity
+clockwork_logging_level: "error"
+
+# Default settings for users
+clockwork_settings_items_per_page: 25
+clockwork_settings_dark_mode: false
+clockwork_settings_language: "en"

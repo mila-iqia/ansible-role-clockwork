@@ -1,26 +1,4 @@
 ---
-- name: Install system packages
-  ansible.builtin.apt:
-    pkg:
-      - python3.9
-      - python3.9-dev
-      - python3-pip
-      - rsync
-
-- name: Checkout source code
-  ansible.builtin.include_role:
-    name: mila.clockwork
-    tasks_from: checkout_src
-
-- name: Install slurm_state requirements with pip
-  ansible.builtin.pip:
-    requirements: "{{ clockwork_install_path }}/scripts/requirements.txt"
-
-- name: Create clockwork user
-  ansible.builtin.include_role:
-    name: mila.clockwork
-    tasks_from: create_user
-
 - name: Setup user update scripts
   ansible.builtin.template:
     src: templates/clockwork-users.service.j2

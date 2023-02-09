@@ -100,33 +100,33 @@ Example Playbook
 
 This is a sample that uses all the defined tasks:
 
-    - hosts: clockwork
-      tasks:
-        - name: Setup local MongoDB
-          include_role:
-            name: mila.clockwork
-            tasks_from: setup_mongod
+   - hosts: clockwork-web
+       tasks:
         - name: Setup clockwork server
           include_role:
             name: mila.clockwork
             tasks_from: setup_server
+   - hosts: clockwork-scrape
+       tasks:
         - name: Setup clockwork stats collection
           include_role:
             name: mila.clockwork
             tasks_from: setup_scrape
+        # This step is optional and you can have another way to insert users
+        # If included it MUST come after the stats collection and be on
+        # the same machine
         - name: Setup user synchcronization with google ldap
           include_role:
             name: mila.clockwork
             tasks_from: setup_users
 
-
-If you want to use a pre-existing instance of MongoDB, skip the
-setup_mongod step and set the correct connection string in
-`clockwork_mongodb_conncetion_string`.
-
 The setup_user step has many hardcoded choices for now which might not
 be useful everywhere, instead of running it as-is, you might want to
 adjust it.
+
+Also, for development purposes a setup_mongod step is included, but it
+requires that all the processes are on the same machine. It is
+strongly recommemed to not deploy in production in that state.
 
 License
 -------

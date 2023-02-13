@@ -5,6 +5,9 @@
       - python3.9
       - python3.9-dev
       - python3-pip
+      - libsystemd-journal-dev
+      - libsystemd-daemon-dev
+      - libsystemd-dev
       - build-essential
       - nginx
 
@@ -18,6 +21,10 @@
   ansible.builtin.include_role:
     name: mila.clockwork
     tasks_from: checkout_src
+
+- name: Install systemd python package
+  ansible.builtin.pip:
+    name: "systemd>=0.16,<0.17"
 
 - name: Install clockwork_web requirements with pip
   ansible.builtin.pip:

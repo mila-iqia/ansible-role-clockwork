@@ -33,6 +33,7 @@ dark_mode=false
 language="{{ clockwork_settings_language }}"
 
 {% for cluster in clockwork_clusters %}
+
 [clusters.{{ cluster.name }}]
 account_field="{{ cluster.account_field }}"
 {% if cluster.update_field %}

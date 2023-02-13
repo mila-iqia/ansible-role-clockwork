@@ -25,11 +25,14 @@ available_languages=["en", "fr"]
 
 [settings.default_values]
 nbr_items_per_page={{ clockwork_settings_items_per_page }}
-dark_mode={{ clockwork_settings_dark_mode }}
+{% if clockwork_settings_dark_mode %}
+dark_mode=true
+{% else %}
+dark_mode=false
+{% endif %}
 language="{{ clockwork_settings_language }}"
 
 {% for cluster in clockwork_clusters %}
-
 [clusters.{{ cluster.name }}]
 account_field="{{ cluster.account_field }}"
 {% if cluster.update_field %}

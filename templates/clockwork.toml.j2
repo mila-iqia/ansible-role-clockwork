@@ -9,8 +9,11 @@ traces_sample_rate={{ clockwork_sentry_traces_sample_rate }}
 
 [logging]
 level="{{ clockwork_logging_level }}"
+level_stderr="{{ clockwork_logging_level_stderr }}"
+level_werkzeug="{{ clockwork_logging_level_werkzeug }}"
 stderr=false
 journald=true
+
 
 [google]
 client_id="{{ clockwork_google_client_id }}"

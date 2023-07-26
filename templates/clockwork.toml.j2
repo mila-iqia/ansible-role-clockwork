@@ -62,7 +62,7 @@ display_order={{ cluster.display_order | default(9999) }}
 {% if cluster.sacct_enabled %}
 remote_user="{{ cluster.remote_user }}"
 remote_hostname="{{ cluster.remote_hostname }}"
-ssh_port="{{ cluster.ssh_port }}"
+ssh_port={{ cluster.ssh_port }}
 sacct_enabled=true
 sacct_path="{{ cluster.sacct_path }}"
 sinfo_path="{{ cluster.sinfo_path }}"

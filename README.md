@@ -78,6 +78,9 @@ something similar.
       remote_hostname:
       remote_path:
 
+      # Port used for remote fetching
+      ssh_port: 22
+
       # The interval at which to fetch stats, in minutes.
       # Must be one of 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30
       remote_interval: 10
@@ -89,6 +92,12 @@ something similar.
 
       # Mandatory if sacct_enabled is true
       sacct_path: "/opt/software/slurm/bin/sacct"
+      
+      # Path of sinfo binary on the remote host
+      sinfo_path: "/opt/software/slurm/bin/sinfo"
+      
+      # Name of the SSH key used for remote fetching
+      ssh_key_filename: id_ssh 
     ```
   - `clockwork_mongodb_connection_string`: If using the included mongod role, the default is okay.  If using an extrenal mongodb server then it should be set to match.  [SECRET] if using username and password.
 

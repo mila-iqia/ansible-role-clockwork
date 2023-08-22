@@ -18,7 +18,6 @@ something similar.
  - `clockwork_server_name`: The fqdn for the clockwork web server.
  - `clockwork_google_client_id`: The Google client ID for OAuth.
  - `clockwork_google_client_secret`: [SECRET] The Google client secret for OAuth.
- - `clockwork_git_deploy_key`: [SECRET] SSH private key to authenticate to github for checkout.
  - `clockwork_ssh_private_key`: [SECRET] SSH private key to connect to remote clusters
  - `clockwork_ssl_cert_file`: [SECRET] SSL certificate file for the website
  - `clockwork_ssl_cert_key`: [SECRET] SSL certificate key for the website

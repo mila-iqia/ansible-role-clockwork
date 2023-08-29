@@ -4,10 +4,6 @@
 # -------------------------------------------------------------
 ### These variables contain secrets and should be encrypted ###
 
-# ssh private key for authentication to github (string)
-#clockwork_git_deploy_key: 
-
-
 # SSH private key for clockwork user, used to connect to remote clusters (string)
 clockwork_ssh_private_key:
 

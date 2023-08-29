@@ -66,6 +66,6 @@ ssh_port={{ cluster.ssh_port }}
 sacct_enabled=true
 sacct_path="{{ cluster.sacct_path }}"
 sinfo_path="{{ cluster.sinfo_path }}"
-ssh_key_filename="id_clockwork"
+ssh_key_filename="{{ cluster.ssh_key_filename | default('id_clockwork') }}"
 {% endif %}
 {% endfor %}

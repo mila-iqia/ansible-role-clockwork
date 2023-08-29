@@ -10,5 +10,4 @@ Environment=CLOCKWORK_CONFIG=/etc/clockwork/clockwork.toml
 Environment=PYTHONPATH={{ clockwork_install_path }}
 
 WorkingDirectory={{ clockwork_install_path }}
-ExecStart=timeout 120 rsync -a {{ item.remote_user }}@{{ item.remote_hostname }}:{{ item.remote_path }}/scontrol_show_{job,node} {{ clockwork_user_home }}/reports/{{ item.name }}
-ExecStart=python3 slurm_state/read_report_commit_to_db.py --jobs_file={{ clockwork_user_home }}/reports/{{ item.name }}/scontrol_show_job --nodes_file={{ clockwork_user_home }}/reports/{{ item.name }}/scontrol_show_node --cluster_name={{ item.name }} --store_in_db
+ExecStart=python3 slurm_state/read_report_commit_to_db.py --slurm_jobs_file={{ clockwork_user_home }}/reports/{{ item.name }}/jobs_file --slurm_nodes_file={{ clockwork_user_home }}/reports/{{ item.name }}/nodes_file --cluster_name={{ item.name }}  --store_in_db --cw_jobs_file {{clockwork_user_home }}/reports/sacct.json --cw_nodes_file {{clockwork_user_home }}/reports/sinfo.json

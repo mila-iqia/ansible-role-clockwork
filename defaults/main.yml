@@ -119,13 +119,6 @@ clockwork_clusters:
     # Interval between fetches (in minutes, for the */{interval} format)
     remote_interval:
 
-# Configuration for Cluster Stats cron
-# Define the interval to run the script (see field 'minute' in crontab(5))
-clockwork_clusterstats_cron_minute: '*/5'
-
-# Define the user who run the script. Optional, defaults to clockwork_user.
-#clockwork_clusterstats_cron_user:
-
 # Define info for sentry
 clockwork_sentry_dns: ""
 clockwork_sentry_traces_sample_rate: 1.0

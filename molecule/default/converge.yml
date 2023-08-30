@@ -37,7 +37,3 @@
       include_role:
         name: mila.clockwork
         tasks_from: setup_scrape
-    - name: Setup clockwork clusterstats cron
-      include_role:
-        name: mila.clockwork
-        tasks_from: setup_clusterstats_cron

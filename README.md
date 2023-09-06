@@ -107,7 +107,7 @@ Example Playbook
 ----------------
 
 This is a sample that uses all the defined tasks:
-
+```
    - hosts: clockwork-web
        tasks:
         - name: Setup clockwork server
@@ -127,7 +127,7 @@ This is a sample that uses all the defined tasks:
           include_role:
             name: mila.clockwork
             tasks_from: setup_users
-
+```
 The setup_user step has many hardcoded choices for now which might not
 be useful everywhere, instead of running it as-is, you might want to
 adjust it.

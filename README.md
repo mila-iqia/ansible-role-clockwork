@@ -134,7 +134,7 @@ adjust it.
 
 Also, for development purposes a setup_mongod step is included, but it
 requires that all the processes are on the same machine. It is
-strongly recommemed to not deploy in production in that state.
+strongly recommended to not deploy in production in that state.
 
 License
 -------

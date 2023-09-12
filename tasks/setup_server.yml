@@ -24,6 +24,11 @@
   ansible.builtin.pip:
     requirements: "{{ clockwork_install_path }}/clockwork_web/requirements.txt"
 
+- name: Compile translations
+  ansible.builtin.command:
+    chdir: "{{ clockwork_install_path }}"
+    cmd: "pybabel compile -d clockwork_web/static/locales"
+
 - name: Install uWSGI
   ansible.builtin.pip:
     name: uwsgi==2.0.*

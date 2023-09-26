@@ -37,7 +37,7 @@ clockwork_mongodb_version: "5.0.9"
 
 
 # Where to fetch the clockwork code
-clockwork_repo: 'git@github.com:mila-iqia/clockwork.git'
+clockwork_repo: 'https://github.com/mila-iqia/clockwork.git'
 clockwork_checkout_commit: "master"
 
 

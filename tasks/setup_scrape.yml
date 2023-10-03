@@ -55,6 +55,20 @@
     owner: "{{ clockwork_user }}"
     group: "{{ clockwork_group }}"
 
+- name: Ensure config dir is present
+  ansible.builtin.file:
+    path: /etc/clockwork
+    mode: 0700
+    state: directory
+    owner: "{{ clockwork_user }}"
+
+- name: Configure Clockwork scrape
+  ansible.builtin.template:
+    src: templates/clockwork.toml.j2
+    dest: /etc/clockwork/clockwork.toml
+    mode: 0600
+    owner: "{{ clockwork_user }}"
+
 - name: Setup cluster update scripts
   ansible.builtin.template:
     src: templates/clockwork-scrape.service.j2

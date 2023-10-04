@@ -61,6 +61,7 @@
     mode: 0700
     state: directory
     owner: "{{ clockwork_user }}"
+    group: "{{ clockwork_group }}"
 
 - name: Configure Clockwork scrape
   ansible.builtin.template:
@@ -68,6 +69,7 @@
     dest: /etc/clockwork/clockwork.toml
     mode: 0600
     owner: "{{ clockwork_user }}"
+    group: "{{ clockwork_group }}"
 
 - name: Setup cluster update scripts
   ansible.builtin.template:

@@ -1,4 +1,10 @@
 ---
+# We can immediately install requirements from the file {{ clockwork_install_path }}/scripts/requirements.txt
+# because it is expected that this task is called after setup_scrape, which copy the source code
+- name: Install scripts requirements with pip
+  ansible.builtin.pip:
+    requirements: "{{ clockwork_install_path }}/scripts/requirements.txt"
+
 - name: Setup user update scripts
   ansible.builtin.template:
     src: templates/clockwork-users.service.j2

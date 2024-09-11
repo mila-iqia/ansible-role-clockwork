@@ -31,6 +31,15 @@
     group: "{{ clockwork_group }}"
     mode: 0700
 
+- name: Copy ssh keys
+  ansible.builtin.copy:
+    content: "{{ item.content }}"
+    dest: "{{ clockwork_user_home }}/.ssh/{{ item.name }}"
+    owner: "{{ clockwork_user }}"
+    group: "{{ clockwork_group }}"
+    mode: 0600
+  loop: "{{ clockwork_ssh_keys }}"
+
 - name: Add ssh key
   ansible.builtin.copy:
     content: "{{ clockwork_ssh_private_key }}"

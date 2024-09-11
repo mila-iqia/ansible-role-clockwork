@@ -130,3 +130,13 @@ clockwork_logging_level: "error"
 clockwork_settings_items_per_page: 25
 clockwork_settings_dark_mode: false
 clockwork_settings_language: "en"
+
+# SARC
+# Install path for SARC code
+sarc_install_path: /opt/sarc
+# SARC Git repository
+sarc_repo: 'https://github.com/mila-iqia/SARC.git'
+# SARC commit to checkout
+sarc_checkout_commit: "master"
+# Port used to access the database
+sarc_mongo_port: 8123

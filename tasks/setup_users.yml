@@ -24,6 +24,31 @@
     state: directory
     owner: "{{ clockwork_user }}"
 
+# SARC
+
+- name: Install git
+  ansible.builtin.apt:
+    pkg:
+      - git
+
+- name: Copy SARC code from git
+  ansible.builtin.git:
+    repo: '{{ sarc_repo }}'
+    dest: '{{ sarc_install_path }}'
+    version: '{{ sarc_checkout_commit }}'
+    accept_newhostkey: yes
+
+- name: Install Poetry
+  ansible.builtin.pip:
+    name: poetry
+    
+- name: Install SARC by using Poetry
+  ansible.builtin.command:
+      cmd: poetry install
+      chdir: "{{sarc_install_path}}/SARC/"
+
+# LDAP
+
 - name: Install ldap private key
   ansible.builtin.copy:
     content: "{{ clockwork_ldap_private_key }}"

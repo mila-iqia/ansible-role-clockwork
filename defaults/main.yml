@@ -9,7 +9,7 @@ clockwork_ssh_private_keys:
   # The name of the key file in the .ssh directory
   - name: 
   # The content of the key file
-  - content: 
+    content: 
 
 
 # SSL cert for nginx (string)

@@ -4,8 +4,12 @@
 # -------------------------------------------------------------
 ### These variables contain secrets and should be encrypted ###
 
-# SSH private key for clockwork user, used to connect to remote clusters (string)
-clockwork_ssh_private_key:
+# List of SSH private keys for clockwork user, used to connect to remote clusters (string)
+clockwork_ssh_private_keys:
+  # The name of the key file in the .ssh directory
+  - name: 
+  # The content of the key file
+  - content: 
 
 
 # SSL cert for nginx (string)

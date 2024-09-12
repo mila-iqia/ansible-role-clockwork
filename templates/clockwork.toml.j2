@@ -1,39 +1,6 @@
-[flask]
-testing=false
-login_disabled=false
-secret_key="{{ clockwork_secret_key }}"
-
-[sentry]
-dns="{{ clockwork_sentry_dns }}"
-traces_sample_rate={{ clockwork_sentry_traces_sample_rate }}
-
-[logging]
-level="{{ clockwork_logging_level }}"
-stderr=false
-journald=true
-
-[google]
-client_id="{{ clockwork_google_client_id }}"
-client_secret="{{ clockwork_google_client_secret }}"
-
-[mongo]
-connection_string="{{ clockwork_mongodb_connection_string }}"
-
-[translation]
-translations_folder="static/locales"
-available_languages=["en", "fr"]
-
-[settings.default_values]
-nbr_items_per_page={{ clockwork_settings_items_per_page }}
-{% if clockwork_settings_dark_mode %}
-dark_mode=true
-{% else %}
-dark_mode=false
-{% endif %}
-language="{{ clockwork_settings_language }}"
+{{ clockwork_config | to_toml }}
 
 {% for cluster in clockwork_clusters %}
-
 [clusters.{{ cluster.name }}]
 account_field="{{ cluster.account_field }}"
 {% if cluster.update_field %}
@@ -68,4 +35,5 @@ sacct_path="{{ cluster.sacct_path }}"
 sinfo_path="{{ cluster.sinfo_path }}"
 ssh_key_filename="{{ cluster.ssh_key_filename | default('id_clockwork') }}"
 {% endif %}
+
 {% endfor %}

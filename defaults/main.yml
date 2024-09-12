@@ -4,8 +4,12 @@
 # -------------------------------------------------------------
 ### These variables contain secrets and should be encrypted ###
 
-# SSH private key for clockwork user, used to connect to remote clusters (string)
-clockwork_ssh_private_key:
+# List of SSH private keys for clockwork user, used to connect to remote clusters (string)
+clockwork_ssh_private_keys:
+  # The name of the key file in the .ssh directory
+  - name: id_clockwork 
+  # The content of the key file
+    content: "{{ clockwork_ssh_private_key }}"
 
 
 # SSL cert for nginx (string)
@@ -56,6 +60,7 @@ clockwork_group: www-data
 # Home for clockwork_user
 clockwork_user_home: /home/clockwork
 
+clockwork_venv_path: "{{ clockwork_user_home }}/venv"
 
 # Install path
 clockwork_install_path: /opt/clockwork
@@ -140,3 +145,37 @@ sarc_repo: 'https://github.com/mila-iqia/SARC.git'
 sarc_checkout_commit: "master"
 # Port used to access the database
 sarc_mongo_port: 8123
+
+
+clockwork_config:
+  flask:
+    testing: false
+    login_disabled: false
+    secret_key: "{{ clockwork_secret_key }}"
+
+  sentry:
+    dsn: "{{ clockwork_sentry_dns }}"
+    traces_sample_rate: "{{ clockwork_sentry_traces_sample_rate }}"
+
+  logging:
+    level: "{{ clockwork_logging_level }}"
+    stderr: false
+    journald: true
+    otel: ""
+
+  google:
+    client_id: "{{ clockwork_google_client_id }}"
+    client_secret: "{{ clockwork_google_client_secret }}"
+
+  mongo:
+    connection_string: "{{ clockwork_mongodb_connection_string }}"
+
+  translation:
+    translation_folder: "static/locales"
+    available_languages: ["en", "fr"]
+
+  settings.default_values:
+    nbr_items_per_page: "{{ clockwork_settings_items_per_page }}"
+    dark_mode: "{{ clockwork_settings_dark_mode }}"
+    language: "{{ clockwork_settings_language }}"
+

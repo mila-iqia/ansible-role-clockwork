@@ -4,6 +4,7 @@
 - name: Install scripts requirements with pip
   ansible.builtin.pip:
     requirements: "{{ clockwork_install_path }}/scripts/requirements.txt"
+    virtualenv: "{{ clockwork_venv_path }}"
 
 - name: Setup user update scripts
   ansible.builtin.template:

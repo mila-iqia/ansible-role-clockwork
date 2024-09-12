@@ -8,6 +8,8 @@ Requirements
 
 This was only tested with ansible 2.12.
 
+This requires that the `toml` python module be installed on the controller
+
 Role Variables
 --------------
 

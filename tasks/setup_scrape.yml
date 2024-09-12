@@ -2,26 +2,29 @@
 - name: Install system packages
   ansible.builtin.apt:
     pkg:
-      - python3.9
-      - python3.9-dev
+      - python3
+      - python3-dev
       - python3-pip
+      - python3-virtualenv
       - python3-systemd
       - rsync
-
-- name: Checkout source code
-  ansible.builtin.include_role:
-    name: mila.clockwork
-    tasks_from: checkout_src
-
-- name: Install slurm_state requirements with pip
-  ansible.builtin.pip:
-    requirements: "{{ clockwork_install_path }}/slurm_state/requirements.txt"
 
 - name: Create clockwork user
   ansible.builtin.user:
     name: "{{ clockwork_user }}"
     group: "{{ clockwork_group }}"
     home: "{{ clockwork_user_home }}"
+
+- name: Checkout source code
+  ansible.builtin.include_role:
+    name: mila.clockwork
+    tasks_from: checkout_src
+
+- name: Install slurm_state venv
+  ansible.builtin.pip:
+    requirements: "{{ clockwork_install_path }}/slurm_state/requirements.txt"
+    virtualenv: "{{ clockwork_venv_path }}"
+    virtualenv_site_packages: true
 
 - name: Create ssh dir
   ansible.builtin.file:
@@ -31,13 +34,14 @@
     group: "{{ clockwork_group }}"
     mode: 0700
 
-- name: Add ssh key
+- name: Copy ssh keys
   ansible.builtin.copy:
-    content: "{{ clockwork_ssh_private_key }}"
-    dest: "{{ clockwork_user_home }}/.ssh/id_clockwork"
+    content: "{{ item.content }}"
+    dest: "{{ clockwork_user_home }}/.ssh/{{ item.name }}"
     owner: "{{ clockwork_user }}"
     group: "{{ clockwork_group }}"
     mode: 0600
+  loop: "{{ clockwork_ssh_private_keys }}"
 
 - name: Setup ssh config for clockwork
   ansible.builtin.template:

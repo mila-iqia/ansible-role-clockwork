@@ -7,9 +7,9 @@
 # List of SSH private keys for clockwork user, used to connect to remote clusters (string)
 clockwork_ssh_private_keys:
   # The name of the key file in the .ssh directory
-  - name: 
+  - name: id_clockwork 
   # The content of the key file
-    content: 
+    content: "{{ clockwork_ssh_private_key }}"
 
 
 # SSL cert for nginx (string)

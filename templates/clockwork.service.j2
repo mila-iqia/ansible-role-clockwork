@@ -8,7 +8,7 @@ Group={{ clockwork_group }}
 Environment=CLOCKWORK_CONFIG=/etc/clockwork/clockwork.toml
 
 WorkingDirectory={{ clockwork_install_path }}
-ExecStart=uwsgi --ini /etc/clockwork/uwsgi.ini
+ExecStart={{ clockwork_venv_path }}/bin/uwsgi --ini /etc/clockwork/uwsgi.ini
 
 [Install]
 WantedBy=multi-user.target

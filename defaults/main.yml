@@ -163,7 +163,8 @@ clockwork_config:
     translation_folder: "static/locales"
     available_languages: ["en", "fr"]
 
-  settings.default_values:
-    nbr_items_per_page: "{{ clockwork_settings_items_per_page }}"
-    dark_mode: "{{ clockwork_settings_dark_mode }}"
-    language: "{{ clockwork_settings_language }}"
+  settings:
+    default_values:
+      nbr_items_per_page: "{{ clockwork_settings_items_per_page }}"
+      dark_mode: "{{ clockwork_settings_dark_mode }}"
+      language: "{{ clockwork_settings_language }}"

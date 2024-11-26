@@ -160,7 +160,7 @@ clockwork_config:
     connection_string: "{{ clockwork_mongodb_connection_string }}"
 
   translation:
-    translation_folder: "{{ clockwork_install_path }}/static/locales"
+    translations_folder: "{{ clockwork_install_path }}/clockwork_web/static/locales"
     available_languages: ["en", "fr"]
 
   settings:

@@ -1,0 +1,13 @@
+[Unit]
+Description=Clockwork clusters status updater
+After=network.target
+
+[Service]
+Type=oneshot
+User={{ clockwork_user }}
+Group={{ clockwork_group }}
+Environment=CLOCKWORK_CONFIG=/etc/clockwork/clockwork.toml
+Environment=PYTHONPATH={{ clockwork_install_path }}
+
+WorkingDirectory={{ clockwork_install_path }}
+ExecStart={{ clockwork_venv_path }}/bin/python3 {{ clockwork_install_path }}/scripts/update_clusters_status.py

@@ -15,7 +15,7 @@
     name: "{{ clockwork_user }}"
     group: "{{ clockwork_group }}"
     home: "{{ clockwork_user_home }}"
-    
+
 - name: Checkout source code
   ansible.builtin.include_role:
     name: mila.clockwork
@@ -112,6 +112,11 @@
     src: /etc/nginx/sites-available/clockwork.cfg
     dest: /etc/nginx/sites-enabled/clockwork
     state: link
+
+- name: Setup clusters status check service
+  ansible.builtin.include_role:
+    name: mila.clockwork
+    tasks_from: setup_clusters_status
 
 - name: Start clockwork
   ansible.builtin.systemd:

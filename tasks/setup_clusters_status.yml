@@ -1,0 +1,33 @@
+---
+# We can immediately install requirements from the file {{ clockwork_install_path }}/scripts/requirements.txt
+# because it is expected that this task is called after setup_scrape, which copy the source code
+- name: Install scripts requirements with pip
+  ansible.builtin.pip:
+    requirements: "{{ clockwork_install_path }}/scripts/requirements.txt"
+    virtualenv: "{{ clockwork_venv_path }}"
+
+- name: Setup scripts for clusters status update
+  ansible.builtin.template:
+    src: templates/clockwork-clusters-status.service.j2
+    dest: /etc/systemd/system/clockwork-clusters-status.service
+    mode: 0600
+
+- name: Setup system timer trigger
+  ansible.builtin.template:
+    src: templates/clockwork-clusters-status.timer.j2
+    dest: /etc/systemd/system/clockwork-clusters-status.timer
+    mode: 0600
+
+- name: Ensure config dir is present
+  ansible.builtin.file:
+    path: /etc/clockwork
+    mode: 0700
+    state: directory
+    owner: "{{ clockwork_user }}"
+
+- name: Enable timers for clusters status update
+  ansible.builtin.systemd:
+    daemon-reload: yes
+    enabled: true
+    state: started
+    name: clockwork-users.timer

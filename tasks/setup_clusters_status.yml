@@ -30,4 +30,4 @@
     daemon-reload: yes
     enabled: true
     state: started
-    name: clockwork-users.timer
+    name: clockwork-clusters-status.timer

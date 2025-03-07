@@ -5,6 +5,7 @@ server {
 
   ssl_certificate /etc/ssl/clockwork.crt;
   ssl_certificate_key /etc/ssl/clockwork.key;
+  ssl_protocols TLSv1.2 TLSv1.3;
 {% else %}
   listen 80;
 {% endif %}
